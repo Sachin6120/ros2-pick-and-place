@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="controllers_file" default=""/>
+
+  <!-- MATERIALS -->
+  <gazebo reference="base_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="link1"><material>Gazebo/Blue</material></gazebo>
+  <gazebo reference="link2"><material>Gazebo/SkyBlue</material></gazebo>
+  <gazebo reference="link3"><material>Gazebo/White</material></gazebo>
+  <gazebo reference="gripper_palm"><material>Gazebo/Grey</material></gazebo>
+
+  <!-- CONTACT (HIGH FRICTION FOR GRIPPING) -->
+  <gazebo reference="left_finger">
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+  </gazebo>
+
+  <gazebo reference="right_finger">
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+  </gazebo>
+
+  <!-- JOINT DAMPING -->
+  <gazebo reference="shoulder_pan_joint">
+    <damping>5.0</damping>
+  </gazebo>
+
+  <gazebo reference="shoulder_lift_joint">
+    <damping>10.0</damping>
+  </gazebo>
+
+  <gazebo reference="elbow_joint">
+    <damping>6.0</damping>
+  </gazebo>
+
+  <gazebo reference="left_finger_joint">
+    <damping>2.0</damping>
+  </gazebo>
+
+  <gazebo reference="right_finger_joint">
+    <damping>2.0</damping>
+  </gazebo>
+
+  <!-- ROS2 CONTROL -->
+  <gazebo>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <parameters>$(arg controllers_file)</parameters>
+    </plugin>
+  </gazebo>
+  
+  <!-- GRASP FIX PLUGIN -->
+  <gazebo>
+    <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
+      <forces_angle_tolerance>100</forces_angle_tolerance>
+      <update_rate>50</update_rate>
+      <grip_count_threshold>2</grip_count_threshold>
+      <max_grip_count>4</max_grip_count>
+      <grip_time_threshold>0.5</grip_time_threshold>
+      <release_tolerance>0.005</release_tolerance>
+      <arm>
+        <arm_name>gripper</arm_name>
+        <palm_link>gripper_palm</palm_link>
+        <gripper_link>left_finger</gripper_link>
+        <gripper_link>right_finger</gripper_link>
+      </arm>
+    </plugin>
+  </gazebo>
+</robot>

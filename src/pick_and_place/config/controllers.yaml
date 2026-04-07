@@ -1,0 +1,94 @@
+controller_manager:
+  ros__parameters:
+    use_sim_time: true
+    update_rate: 300
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    gripper_controller:
+      type: position_controllers/GripperActionController
+
+
+joint_state_broadcaster:
+  ros__parameters:
+    use_sim_time: true
+
+
+arm_controller:
+  ros__parameters:
+    use_sim_time: true
+
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+
+    command_interfaces:
+      - position
+
+    state_interfaces:
+      - position
+      - velocity
+
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+
+    gains:
+      shoulder_pan_joint:
+        p: 40.0
+        i: 0.1
+        d: 5.0
+
+      shoulder_lift_joint:
+        p: 70.0
+        i: 0.2
+        d: 8.0
+
+      elbow_joint:
+        p: 35.0
+        i: 0.1
+        d: 4.0
+
+    constraints:
+      goal_time: 60.0
+      stopped_velocity_tolerance: 0.3
+
+      shoulder_pan_joint:
+        goal: 0.6
+
+      shoulder_lift_joint:
+        goal: 0.6
+
+      elbow_joint:
+        goal: 0.6
+
+    allow_partial_joints_goal: false
+    open_loop_control: false
+
+
+gripper_controller:
+  ros__parameters:
+    use_sim_time: true
+
+    joint: left_finger_joint
+
+    command_interfaces:
+      - position
+
+    state_interfaces:
+      - position
+      - velocity
+
+    gains:
+      left_finger_joint:
+        p: 20.0
+        i: 0.1
+        d: 2.0
+
+    goal_tolerance: 0.01
+    max_effort: 20.0
+    allow_stalling: true

@@ -1,0 +1,28 @@
+# Colcon build artifacts
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ROS bags
+*.bag
+*.db3
+
+# Metrics (generated at runtime)
+# Uncomment if you want to track sample CSVs:
+# *.csv
+src/gazebo_ros2_control/

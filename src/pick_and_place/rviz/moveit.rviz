@@ -1,0 +1,50 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Value: true
+    - Class: rviz_default_plugins/RobotModel
+      Description Topic:
+        Value: /robot_description
+      Name: RobotModel
+      Robot Description: robot_description
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Value: true
+      Show Axes: true
+      Show Names: true
+    - Class: moveit_rviz_plugin/MotionPlanning
+      Name: MotionPlanning
+      Move Group Namespace: ""
+      Planning Scene Topic: /monitored_planning_scene
+      Robot Description: robot_description
+      Trajectory Topic: /display_planned_path
+      Planning Request:
+        Planning Group: arm
+        Goal State Alpha: 0.5
+        Start State Alpha: 0.3
+      Planned Path:
+        Loop Animation: true
+        Trajectory Topic: /display_planned_path
+  Global Options:
+    Fixed Frame: world
+    Frame Rate: 30
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 1.5
+      Focal Point:
+        X: 0.2
+        Y: 0
+        Z: 0.3
+      Yaw: 0.8
+      Pitch: 0.5
+Window Geometry:
+  Width: 1200
+  Height: 800
